@@ -1,14 +1,13 @@
 
 import Diagnostic.Diagnoser;
 import ExtractionDeConnaissances.*;
-import ProgrammationParContraintes.backtracking;
-import ProgrammationParContraintes.backtracking_nosol;
 import examples.AssemblyLine;
 import planning.Action;
 import planning.PlanningProblem;
 import planning.State;
 import Representations.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -404,11 +403,13 @@ public class main {
 
         DBReader dbr=new DBReader(setvar);
         try {
-            Database db=dbr.importDB("/Users/matmat1520/Documents/Projet-IA-V4?fbclid=IwAR2qc3LavdmlJp4-FQ3Q5f3kBntImI1a6Ttp6_PvoStM3r20ck85r9pHuAk/Projet_IA/src/db.txt");
+            String pathDb= new File("src/db.txt").getAbsolutePath();
+
+            Database db=dbr.importDB(pathDb);
 
             /*ne pas lancer, c est un peu long*/
-            FrequentItemsetMiner fim=new FrequentItemsetMiner(db);
-            HashMap<Set<Map.Entry<Variable,String>>,Integer> jspjetestedelamerde= fim.FrequentItemsets(3);
+            FrequentItemsetMinerBoolean fim=new FrequentItemsetMinerBoolean(db);
+            HashMap<Set<Map.Entry<Variable,String>>,Integer> jspjetestedelamerde= fim.FrequentItemsets(100);
             for (Map.Entry<Set<Map.Entry<Variable,String>>,Integer> elt:jspjetestedelamerde.entrySet()){
                 Iterator<Map.Entry<Variable,String>> oui=elt.getKey().iterator();
                 String fkkks="CECI EST UN SET DE VARIABLE: ";
@@ -422,7 +423,7 @@ public class main {
             e.printStackTrace();
         }
         /*BooleanDatabase madatabase = new BooleanDatabase(ListeT, ListeV);
-        FrequentItemsetMiner fim = new FrequentItemsetMiner(madatabase);
+        FrequentItemsetMinerBoolean fim = new FrequentItemsetMinerBoolean(madatabase);
         System.out.println(fim.FrequentItemsets(2));
         */
 
