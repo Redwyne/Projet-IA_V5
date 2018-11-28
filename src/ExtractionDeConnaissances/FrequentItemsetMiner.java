@@ -3,7 +3,6 @@ package ExtractionDeConnaissances;
 import java.util.*;
 
 import Representations.*;
-import javafx.util.Pair;
 
 //prend les itemsets de longueur1, envoie leurs freq, puis regarde les itemsets de longueur 2.
 public class FrequentItemsetMiner {
@@ -12,6 +11,7 @@ public class FrequentItemsetMiner {
     public FrequentItemsetMiner(Database bd) {
         this.bd = bd;
     }
+
 
 
 

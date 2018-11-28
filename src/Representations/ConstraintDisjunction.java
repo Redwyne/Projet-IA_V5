@@ -1,10 +1,11 @@
 package Representations;
 
+import planning.State;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ConstraintDisjunction implements Constraint{
-
 
     @Override
     public boolean isSatisfiedBy(LinkedHashMap<Variable, String> a) {

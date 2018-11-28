@@ -39,10 +39,8 @@ public class Diagnoser {
         return true;
     }
     public HashMap<Variable, String> expli(HashMap<Variable,String> ens_choix, HashMap<Variable, String> choixinterdit){
-        HashMap<Variable,String> CNE=new HashMap<>();
-        CNE.putAll(ens_choix);
-        HashMap<Variable,String> res=new HashMap<>();
-        res.putAll(ens_choix);
+        HashMap<Variable, String> CNE = new HashMap<>(ens_choix);
+        HashMap<Variable, String> res = new HashMap<>(ens_choix);
         for (Map.Entry xval: CNE.entrySet()){
             HashMap<Variable,String> resprime=new HashMap<>();
             resprime.putAll(res);

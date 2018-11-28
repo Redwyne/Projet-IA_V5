@@ -10,7 +10,7 @@ import Representations.*;
 import planning.*;
 
 public class AssemblyLine {
-    HashMap<Variable,String> init_state=new HashMap<>();
+    LinkedHashMap<Variable,String> init_state=new LinkedHashMap<>();
     Set<String> dom_tf=new HashSet<>();
     Set<String> ALL_COLORS=new HashSet<>();
     ArrayList<Variable> ALL_TF=new ArrayList<>();
@@ -71,11 +71,11 @@ public class AssemblyLine {
     public State simulation(){
         //on initialise toutes nos variables (et les possibilités de couleurs) (ici par ce que je sais pas ou les mettre autrement)
         //on fait un état initial, contenant chaque variable, avec la couleur grise
-        HashMap<Variable,String> goal_state=new HashMap<>();
+        LinkedHashMap<Variable,String> goal_state=new LinkedHashMap<>();
         //on crée une action permettant d ajouter le chassis(aucune precondition) avant de l appliquer a notre etat_but (le chassis permettant la pose de toutes autres pieces)
-        HashMap<Variable,String> precond_etat= new HashMap<>();
+        LinkedHashMap<Variable,String> precond_etat= new LinkedHashMap<>();
         State precond=new State(precond_etat);
-        HashMap<Variable,String> effect_etat= new HashMap<>();
+        LinkedHashMap<Variable,String> effect_etat= new LinkedHashMap<>();
         effect_etat.put(has_chassis,"true");
         State effect=new State(effect_etat);
         ArrayList<Rule> r_al=new ArrayList<>();
@@ -88,8 +88,8 @@ public class AssemblyLine {
         //on vide effect (precond n a pas besoin) pour le re utiliser
         //on parcourt notre init_state pour créer chacune de ses valeurs à notre etat_but (qu on va accompagner d une couleur random)
         for (HashMap.Entry<Variable,String> jsp : init_state.entrySet()) {
-            HashMap<Variable,String> precond_etatX=new HashMap<>();
-            HashMap<Variable,String>effect_etatX=new HashMap<>();
+            LinkedHashMap<Variable,String> precond_etatX=new LinkedHashMap<>();
+            LinkedHashMap<Variable,String>effect_etatX=new LinkedHashMap<>();
             precond_etatX.put(has_chassis,"true");
             int randomNum = ThreadLocalRandom.current().nextInt(0, jsp.getKey().getDomaine().size());
             Object[] l_allcolor =Arrays.copyOf(jsp.getKey().getDomaine().toArray(), (jsp.getKey().getDomaine().size()));

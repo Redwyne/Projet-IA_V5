@@ -25,13 +25,13 @@ public class AssociationRuleMiner {
         return al_rule;
     }
     public LinkedHashMap<Variable,String> to_hm(Variable a){
-        LinkedHashMap<Variable,String> hm=new LinkedHashMap();
+        LinkedHashMap<Variable,String> hm=new LinkedHashMap<>();
         hm.put(a,"true");
 
         return hm;
     }
     public LinkedHashMap<Variable,String> to_hm(HashSet<Variable> a){
-        LinkedHashMap<Variable,String> hm=new LinkedHashMap();
+        LinkedHashMap<Variable,String> hm=new LinkedHashMap<>();
         for (Variable elt: a){
             hm.put(elt,"true");
         }

@@ -1,13 +1,14 @@
 
 import Diagnostic.Diagnoser;
 import ExtractionDeConnaissances.*;
+import ProgrammationParContraintes.backtracking;
+import ProgrammationParContraintes.backtracking_nosol;
 import examples.AssemblyLine;
 import planning.Action;
 import planning.PlanningProblem;
 import planning.State;
 import Representations.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -82,10 +83,10 @@ public class main {
 
         // instanciation d'une regle de type Rule avec ses premisses (pr ) et ses conclusions ( ccl)
 
-        HashMap<Variable, String> pr_etat = new HashMap<>();
+        LinkedHashMap<Variable, String> pr_etat = new LinkedHashMap<>();
         pr_etat.put(cd, "V");
         pr_etat.put(cg, "V");
-        HashMap<Variable, String> ccl_etat = new HashMap<>();
+        LinkedHashMap<Variable, String> ccl_etat = new LinkedHashMap<>();
         ccl_etat.put(cv, "B");
         Rule R1 = new Rule(new State(pr_etat),new State(ccl_etat));
 
@@ -156,10 +157,10 @@ public class main {
         premisses_etat.put(cd, "G");
         */
         //pour changer la couleur de gauche, on doit avoir cg présent(=true)
-        HashMap<Variable,String> precond_hm=new HashMap<>();
+        LinkedHashMap<Variable,String> precond_hm=new LinkedHashMap<>();
         precond_hm.put(has_cg,"true");
         State precond=new State(precond_hm);
-        HashMap<Variable, String> effect_hm = new HashMap<>();
+        LinkedHashMap<Variable, String> effect_hm = new LinkedHashMap<>();
         effect_hm.put(cg, "N");
         State effect = new State(effect_hm);
         ArrayList<Rule> actioncgnoir=new ArrayList<>();
@@ -167,10 +168,10 @@ public class main {
         actioncgnoir.add(rulecgcolor);
         Action cgnoir = new Action(actioncgnoir);
 
-        HashMap<Variable,String> precond_hm1=new HashMap<>();
+        LinkedHashMap<Variable,String> precond_hm1=new LinkedHashMap<>();
         precond_hm1.put(has_cd,"true");
         State precond1=new State(precond_hm1);
-        HashMap<Variable, String> effect_hm1 = new HashMap<>();
+        LinkedHashMap<Variable, String> effect_hm1 = new LinkedHashMap<>();
         effect_hm1.put(cd, "B");
         State effect1 = new State(effect_hm1);
         ArrayList<Rule> actioncdblanc=new ArrayList<>();
@@ -199,10 +200,10 @@ public class main {
         Action cdblanc = new Action(premisses1, effect1,al_needhascd);
 */
 
-        HashMap<Variable,String> precond_hm2=new HashMap<>();
+        LinkedHashMap<Variable,String> precond_hm2=new LinkedHashMap<>();
         precond_hm2.put(has_ct,"true");
         State precond2=new State(precond_hm2);
-        HashMap<Variable, String> effect_hm2 = new HashMap<>();
+        LinkedHashMap<Variable, String> effect_hm2 = new LinkedHashMap<>();
         effect_hm2.put(ct, "R");
         State effect2 = new State(effect_hm2);
         ArrayList<Rule> actionctrouge=new ArrayList<>();
@@ -230,10 +231,10 @@ public class main {
         al_needhasct.add(needhasct);
         Action ctrouge = new Action(premisses2, effect2,al_needhasct);
 */
-        HashMap<Variable,String> precond_hm3=new HashMap<>();
+        LinkedHashMap<Variable,String> precond_hm3=new LinkedHashMap<>();
         precond_hm3.put(has_cv,"true");
         State precond3=new State(precond_hm3);
-        HashMap<Variable, String> effect_hm3 = new HashMap<>();
+        LinkedHashMap<Variable, String> effect_hm3 = new LinkedHashMap<>();
         effect_hm3.put(cv, "R");
         State effect3 = new State(effect_hm3);
         ArrayList<Rule> actioncvrouge=new ArrayList<>();
@@ -267,7 +268,7 @@ public class main {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///TEST DFS
 
-        HashMap<Variable,String> initial = new HashMap<>();
+        LinkedHashMap<Variable,String> initial = new LinkedHashMap<>();
         initial.put(cg,"G");
         initial.put(has_cg,"true");
         initial.put(cd,"G");
@@ -281,7 +282,7 @@ public class main {
 
 
 
-        HashMap<Variable,String> finale = new HashMap<>();
+        LinkedHashMap<Variable,String> finale = new LinkedHashMap<>();
         finale.put(cg,"N");
         finale.put(has_cg,"true");
         finale.put(cd,"B");
@@ -298,7 +299,7 @@ public class main {
         ouverture.add(ctrouge);
         ouverture.add(cvrouge);
         Stack<Action> plan=new Stack<>();
-        ArrayList<HashMap<Variable,String>> closed=new ArrayList<>();
+        ArrayList<LinkedHashMap<Variable,String>> closed=new ArrayList<>();
 
         PlanningProblem P1=new PlanningProblem(init,ouverture,fin);
         State etats = PlanningProblem.getInit_state();
@@ -403,13 +404,11 @@ public class main {
 
         DBReader dbr=new DBReader(setvar);
         try {
-            String pathDb= new File("src/db.txt").getAbsolutePath();
+            Database db=dbr.importDB("/Users/matmat1520/Documents/Projet-IA-V4?fbclid=IwAR2qc3LavdmlJp4-FQ3Q5f3kBntImI1a6Ttp6_PvoStM3r20ck85r9pHuAk/Projet_IA/src/db.txt");
 
-            Database db=dbr.importDB(pathDb);
-
-            /*ne pas lancer, c est un peu long*/
-            FrequentItemsetMinerBoolean fim=new FrequentItemsetMinerBoolean(db);
-            HashMap<Set<Map.Entry<Variable,String>>,Integer> jspjetestedelamerde= fim.FrequentItemsets(100);
+            /*ne pas lancer, c est un peu long
+            FrequentItemsetMiner fim=new FrequentItemsetMiner(db);
+            HashMap<Set<Map.Entry<Variable,String>>,Integer> jspjetestedelamerde= fim.FrequentItemsets(3);
             for (Map.Entry<Set<Map.Entry<Variable,String>>,Integer> elt:jspjetestedelamerde.entrySet()){
                 Iterator<Map.Entry<Variable,String>> oui=elt.getKey().iterator();
                 String fkkks="CECI EST UN SET DE VARIABLE: ";
@@ -418,12 +417,12 @@ public class main {
                     fkkks+=obj.getKey().getNom();
                 }
                 System.out.println(fkkks);
-            }
+            }*/
         } catch (IOException e) {
             e.printStackTrace();
         }
         /*BooleanDatabase madatabase = new BooleanDatabase(ListeT, ListeV);
-        FrequentItemsetMinerBoolean fim = new FrequentItemsetMinerBoolean(madatabase);
+        FrequentItemsetMiner fim = new FrequentItemsetMiner(madatabase);
         System.out.println(fim.FrequentItemsets(2));
         */
 

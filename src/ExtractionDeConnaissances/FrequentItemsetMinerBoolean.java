@@ -3,7 +3,6 @@ package ExtractionDeConnaissances;
 import java.util.*;
 
 import Representations.Variable;
-import representations.*;
 //prend les itemsets de longueur1, envoie leurs freq, puis regarde les itemsets de longueur 2.
 public class FrequentItemsetMinerBoolean {
     BooleanDatabase bd;

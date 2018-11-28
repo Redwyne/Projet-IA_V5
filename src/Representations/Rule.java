@@ -24,6 +24,7 @@ public class Rule implements Constraint {
         return conclusion;
     }
 
+
     @Override
     public boolean isSatisfiedBy(LinkedHashMap<Variable, String> mycar) {
         boolean p = true;

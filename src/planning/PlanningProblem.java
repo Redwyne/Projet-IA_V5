@@ -29,7 +29,7 @@ public class PlanningProblem {
         return final_states;
     }
 
-    public static Stack<Action> DFS(PlanningProblem problem, State etat, Stack<Action> plan, ArrayList<HashMap<Variable,String>> closed) {
+    public static Stack<Action> DFS(PlanningProblem problem, State etat, Stack<Action> plan, ArrayList<LinkedHashMap<Variable, String>> closed) {
         if (Action.satisfies(etat, problem.getFinal_states())) {
             return plan;
         } else {
@@ -40,7 +40,7 @@ public class PlanningProblem {
                 if (!closed.contains(next.getEtat())) {
                     //on agit sur un STACK(pile) avec push pour ajouter en haut, pop pour retirer en haut
                     plan.push(act);
-                    closed.add((HashMap<Variable,String>)next.getEtat().clone());
+                    closed.add((LinkedHashMap<Variable,String>)next.getEtat().clone());
                     Stack<Action> subplan = DFS(problem, next, plan, closed);
                     if (!(subplan == null)) {
                         return subplan;
@@ -69,7 +69,7 @@ public class PlanningProblem {
                     aled.add(act);
                     State next = act.apply(etat);
                     if(!(closed.contains(next)) && !(open.contains(next))){
-                        State next_c=new State((HashMap<Variable,String>)next.getEtat().clone());
+                        State next_c=new State((LinkedHashMap<Variable,String>)next.getEtat().clone());
                         father.put(next_c,etat);
                         plan.put(next_c,act);
                         if(Action.satisfies(next,problem.getFinal_states())){

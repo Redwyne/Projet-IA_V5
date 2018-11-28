@@ -14,23 +14,23 @@ public class Disjunction implements Constraint {
 
     @Override
     public boolean isSatisfiedBy(LinkedHashMap<Variable, String> mycar) {
-        boolean oui = false;
-        boolean ouioui = false;
+        boolean test1 = false;
+        boolean test2 = false;
         for (Map.Entry<Variable, String> elt_dij : djt.entrySet()) {
             if (mycar.get(elt_dij.getKey()) == null) {
-                oui=true;
+                test1=true;
             } else {
                 if (mycar.get(elt_dij.getKey()).equals(elt_dij.getValue())) {
-                    if (!oui && !ouioui) {
-                        oui = true;
-                    } else if (oui && !ouioui) {
-                        ouioui = true;
-                        oui = false;
+                    if (!test1 && !test2) {
+                        test1 = true;
+                    } else if (test1 && !test2) {
+                        test2 = true;
+                        test1 = false;
                     }
                 }
             }
         }
-        return(oui);
+        return(test1);
     }
 
     @Override
